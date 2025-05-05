@@ -7,7 +7,7 @@ export function Home() {
       <div className="max-w-4xl mx-auto px-4 space-y-12">
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">
-            Bienvenue sur StrikeCount
+            Bienvenue sur StreakCount
           </h1>
           <p className="text-xl text-muted-foreground">
             Votre application personnelle pour suivre et analyser vos
@@ -21,7 +21,7 @@ export function Home() {
               Suivez vos expériences
             </h2>
             <p className="text-muted-foreground mb-6">
-              StrikeCount vous permet d'enregistrer et d'analyser vos relations
+              StreakCount vous permet d'enregistrer et d'analyser vos relations
               intimes avec des données comme la durée, la qualité et les
               informations sur vos partenaires.
             </p>
@@ -81,7 +81,7 @@ export function Home() {
 
         <div className="text-center text-muted-foreground">
           <p>
-            StrikeCount est une application personnelle et privée qui protège
+            StreakCount est une application personnelle et privée qui protège
             vos données sensibles. Vos statistiques ne sont jamais partagées.
           </p>
         </div>

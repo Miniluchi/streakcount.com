@@ -17,7 +17,7 @@ function App() {
             <div className="container mx-auto flex items-center justify-between py-4 px-4">
               <div className="flex items-center gap-2">
                 <Link to="/">
-                  <h1 className="text-2xl font-bold">StrikeCount</h1>
+                  <h1 className="text-2xl font-bold">StreakCount</h1>
                 </Link>
               </div>
 
@@ -52,7 +52,7 @@ function App() {
           {/* Pied de page */}
           <footer className="w-full border-t">
             <div className="container mx-auto py-6 text-center text-sm text-muted-foreground">
-              <p>© 2024 StrikeCount. Tous droits réservés.</p>
+              <p>© 2024 StreakCount. Tous droits réservés.</p>
             </div>
           </footer>
         </div>
