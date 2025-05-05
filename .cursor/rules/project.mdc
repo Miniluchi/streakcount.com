@@ -3,11 +3,11 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Projet Strikcount
+# Projet Streakcount
 
 ## Vision du projet
 
-Strikcount a été conçu comme une application personnelle permettant de suivre et d'analyser les expériences intimes des utilisateurs. L'objectif principal est de fournir un outil de suivi statistique des relations sexuelles, permettant aux utilisateurs de mieux comprendre leurs habitudes, préférences et évolutions dans le temps.
+Streakcount a été conçu comme une application personnelle permettant de suivre et d'analyser les expériences intimes des utilisateurs. L'objectif principal est de fournir un outil de suivi statistique des relations sexuelles, permettant aux utilisateurs de mieux comprendre leurs habitudes, préférences et évolutions dans le temps.
 
 ## Architecture générale
 
