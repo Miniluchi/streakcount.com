@@ -6,10 +6,10 @@ Streakcount est une application de statistiques sur les relations sexuelles qui 
 
 ## Fonctionnalités principales
 
-- Enregistrement des rencontres avec détails (durée, qualité, date, etc.)
-- Gestion des informations des partenaires (nom, âge, sexe, taille)
-- Visualisation de statistiques et tendances
-- Interface utilisateur intuitive et moderne
+- Gestion de la connexion de l'utilisateur 
+- Gestion des partenaires avec qui une relation a eu lieu
+- Compteur de partenaires
+- Consultation de la liste des différents partenaires
 
 ## Technologies utilisées
 
