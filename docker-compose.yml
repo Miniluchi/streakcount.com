@@ -1,0 +1,16 @@
+services:
+  scfront:
+    build:
+      context: ./scFront
+      dockerfile: Dockerfile
+    container_name: scfront
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./scFront:/app
+      # Le dossier node_modules local ne sera PAS copié dans le container
+      # Car le volume anonyme masque le dossier node_modules monté depuis l'hôte
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev -- --host 0.0.0.0
