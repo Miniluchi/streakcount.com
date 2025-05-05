@@ -1,8 +1,8 @@
-# Strikcount
+# Streakcount
 
 ## Description
 
-Strikcount est une application de statistiques sur les relations sexuelles qui ont été recensées par les utilisateurs. L'application permet de stocker et d'analyser diverses informations telles que la durée, la qualité, ainsi que les informations concernant les partenaires.
+Streakcount est une application de statistiques sur les relations sexuelles qui ont été recensées par les utilisateurs. L'application permet de stocker et d'analyser diverses informations telles que la durée, la qualité, ainsi que les informations concernant les partenaires.
 
 ## Fonctionnalités principales
 
