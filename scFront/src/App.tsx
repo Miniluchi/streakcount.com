@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { Home } from "./pages/home/Home";
-import { ModeToggle } from "./components/ui/mode-toggle";
+import { ModeToggle } from "./components/mode-toggle";
 import { Button } from "./components/ui/button";
 
 function App() {
