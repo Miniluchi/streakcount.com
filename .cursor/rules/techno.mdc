@@ -1,0 +1,81 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Technologies et fonctionnement technique
+
+## Stack technologique
+
+### Frontend
+- **React 19**: Bibliothèque JavaScript pour construire des interfaces utilisateurs réactives
+- **TypeScript**: Surensemble de JavaScript ajoutant le typage statique
+- **Vite**: Outil de build rapide et moderne
+- **ShadcnUI**: Collection de composants UI réutilisables basés sur Radix UI
+- **TailwindCSS**: Framework CSS utilitaire
+- **React Router**: Gestion du routage côté client
+
+### Backend
+- **Node.js**: Environnement d'exécution JavaScript côté serveur
+- **Express**: Framework web minimaliste pour Node.js
+- **Sequelize**: ORM JavaScript/TypeScript pour gérer les bases de données relationnelles
+- **MySQL**: Système de gestion de base de données relationnelles
+
+## Architecture logicielle
+
+### Structure du frontend
+```
+scFront/
+├── public/           # Ressources statiques
+├── src/
+│   ├── components/   # Composants réutilisables
+│   ├── contexts/     # Contextes React pour le state global
+│   ├── hooks/        # Hooks personnalisés
+│   ├── layouts/      # Layouts de page
+│   ├── lib/          # Utilitaires et helpers
+│   ├── pages/        # Composants de page
+│   ├── services/     # Services pour les appels API
+│   ├── types/        # Définitions de types TypeScript
+│   ├── App.tsx       # Composant principal
+│   └── main.tsx      # Point d'entrée de l'application
+```
+
+### Structure du backend
+```
+scBack/
+├── config/           # Configurations (BDD, serveur, etc.)
+├── controllers/      # Contrôleurs pour gérer les requêtes
+├── middleware/       # Middleware Express
+├── models/           # Modèles Sequelize
+├── routes/           # Définition des routes API
+├── services/         # Logique métier
+├── utils/            # Utilitaires
+└── index.js          # Point d'entrée de l'application
+```
+
+## Flux de données
+
+1. Le frontend envoie des requêtes HTTP à l'API backend
+2. Les routes du backend dirigent ces requêtes vers les contrôleurs appropriés
+3. Les contrôleurs utilisent les services pour exécuter la logique métier
+4. Les services interagissent avec les modèles Sequelize
+5. Sequelize traduit les opérations en requêtes SQL pour MySQL
+6. Les résultats sont renvoyés au client suivant le chemin inverse
+
+## Sécurité
+
+- Validation des entrées côté client et serveur
+- Sanitization des données avant stockage
+- Protection contre les attaques XSS et CSRF
+- Hachage des mots de passe
+
+## Déploiement
+
+### Environnement de développement
+- Serveur de développement Vite pour le frontend
+- Nodemon pour le hot reloading du backend
+
+### Environnement de production
+- Build optimisé du frontend avec Vite
+- Serveur Node.js avec PM2 pour la gestion des processus
+- Base de données MySQL hébergée

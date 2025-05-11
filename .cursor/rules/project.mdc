@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Projet Streakcount
+
+## Vision du projet
+
+Streakcount a été conçu comme une application personnelle permettant de suivre et d'analyser les expériences intimes des utilisateurs. L'objectif principal est de fournir un outil de suivi statistique des relations sexuelles, permettant aux utilisateurs de mieux comprendre leurs habitudes, préférences et évolutions dans le temps.
+
+## Architecture générale
+
+Le projet est structuré selon une architecture client-serveur classique:
+
+- **Frontend**: Application React qui gère l'interface utilisateur et l'interaction
+- **Backend**: API RESTful développée avec Node.js/Express qui traite les données
+- **Base de données**: MySQL qui stocke toutes les informations
+
+## Modèle de données
+
+### Principales entités
+
+1. **Utilisateur**
+   - Informations de connexion
+   - Données personnelles de base
+
+2. **Rencontre**
+   - Date et heure
+   - Durée
+   - Évaluation qualitative (note ou étoiles)
+   - Commentaires/notes
+   - Référence au partenaire
+
+3. **Partenaire**
+   - Nom
+   - Âge
+   - Sexe
+   - Taille
+   - Autres attributs pertinents
+
+## Fonctionnalités principales
+
+### Gestion des rencontres
+- Ajout, modification et suppression d'enregistrements
+- Filtrage par partenaire, période, ou autres critères
+
+### Gestion des partenaires
+- Ajout, modification et suppression de partenaires
+- Visualisation des statistiques par partenaire
+
+### Statistiques et visualisation
+- Tendances temporelles (fréquence, durée, satisfaction)
+- Comparaisons entre partenaires
+- Analyse de corrélations (ex: durée vs satisfaction)
