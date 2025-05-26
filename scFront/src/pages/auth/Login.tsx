@@ -11,8 +11,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/hooks/useAuth";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export function Login() {
+  usePageTitle("Connexion");
   const navigate = useNavigate();
   const { login, isLoading, error, clearError } = useAuth();
   const [formData, setFormData] = useState({

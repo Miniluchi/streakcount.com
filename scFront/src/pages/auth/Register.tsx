@@ -10,9 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/hooks/useAuth";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { useState } from "react";
 
 export function Register() {
+  usePageTitle("Inscription");
   const navigate = useNavigate();
   const { register, isLoading, error, clearError } = useAuth();
   const [formData, setFormData] = useState({
