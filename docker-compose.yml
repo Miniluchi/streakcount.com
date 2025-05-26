@@ -12,5 +12,18 @@ services:
       # Car le volume anonyme masque le dossier node_modules monté depuis l'hôte
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV}
     command: npm run dev -- --host 0.0.0.0
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: scJenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
