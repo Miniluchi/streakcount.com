@@ -16,13 +16,16 @@ services:
     command: npm run dev -- --host 0.0.0.0
 
   jenkins:
-    image: jenkins/jenkins:lts-jdk21
+    build:
+      context: .
+      dockerfile: jenkins.dockerfile
     container_name: scJenkins
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
 volumes:

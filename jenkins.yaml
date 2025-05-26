@@ -1,0 +1,71 @@
+pipeline {
+  agent {
+    docker {
+      image 'node:20'
+      args '-u root:root'
+    }
+  }
+
+  environment {
+    // Variables d'environnement personnalisables
+    REMOTE_USER = 'miniluchi'
+    REMOTE_HOST = '82.67.94.7'
+    REMOTE_PATH = '/home/miniluchi/streakcount'
+    // Clé d'identité Jenkins (configurée dans Credentials)
+    SSH_CREDENTIALS_ID = '7a455777-5495-4998-9f92-f28419937cae'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        sh 'rm -rf ./* ./.??* || true'
+        sh 'git clone https://github.com/Miniluchi/streakcount.com.git .'
+      }
+    }
+
+    stage('Build Frontend') {
+      steps {
+        dir('scFront') {
+          sh 'npm ci'
+          sh 'npm run build'
+        }
+      }
+    }
+
+    stage('Build Backend') {
+      steps {
+        dir('scBack') {
+          sh 'npm ci'
+          // Ajoute ici un build backend si besoin (ex: transpile TypeScript)
+        }
+      }
+    }
+
+    stage('Archive Build') {
+      steps {
+        sh 'tar czf build.tar.gz scFront/dist scBack'
+        archiveArtifacts artifacts: 'build.tar.gz', fingerprint: true
+      }
+    }
+
+    stage('Deploy to Remote Server') {
+      steps {
+        sshagent (credentials: ["${env.SSH_CREDENTIALS_ID}"]) {
+          sh """
+            scp -P 33327 -o StrictHostKeyChecking=no build.tar.gz ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}/
+            ssh -p 33327 -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} 'cd ${REMOTE_PATH} && tar xzf build.tar.gz && rm build.tar.gz'
+          """
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo 'Déploiement terminé avec succès !'
+    }
+    failure {
+      echo 'Le build ou le déploiement a échoué.'
+    }
+  }
+}
