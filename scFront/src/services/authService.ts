@@ -160,70 +160,71 @@ export const authService = {
   // Connexion
   login: async (loginData: LoginData): Promise<AuthResponse> => {
     try {
-      // Validation côté client
       if (!loginData.email || !loginData.password) {
         throw new Error("Missing required fields");
       }
-
+  
       if (!loginData.email.includes("@")) {
         throw new Error("Invalid email format");
       }
-
+  
       const response = await apiRequest("/auth/login", {
         method: "POST",
         body: JSON.stringify(loginData),
       });
-
+  
       return {
         success: true,
         message: "Connexion réussie !",
-        user: response.user,
-        token: response.token,
+        user: (response as any).user,
+        token: (response as any).token,
       };
-    } catch (error) {
-      const apiError = handleApiError(error);
+    } catch (error: unknown) {
+      const typedError = error as ErrorResponse;
+      const apiError = handleApiError(typedError);
       return {
         success: false,
         message: apiError.message,
       };
     }
   },
+  
 
-  // Inscription
   register: async (registerData: RegisterData): Promise<AuthResponse> => {
     try {
-      // Validation côté client
       if (!registerData.name || !registerData.email || !registerData.password) {
         throw new Error("Missing required fields");
       }
-
+  
       if (!registerData.email.includes("@")) {
         throw new Error("Invalid email format");
       }
-
+  
       if (registerData.password.length < 6) {
         throw new Error("Password too short");
       }
-
+  
       const response = await apiRequest("/auth/register", {
         method: "POST",
         body: JSON.stringify(registerData),
       });
-
+  
       return {
         success: true,
         message: "Inscription réussie ! Vous pouvez maintenant vous connecter.",
-        user: response.user,
-        token: response.token,
+        user: (response as any).user,
+        token: (response as any).token,
       };
-    } catch (error) {
-      const apiError = handleApiError(error);
+    } catch (error: unknown) {
+      const typedError = error as ErrorResponse;
+      const apiError = handleApiError(typedError);
       return {
         success: false,
         message: apiError.message,
       };
     }
   },
+  
 
   // Déconnexion
   logout: async (): Promise<AuthResponse> => {
