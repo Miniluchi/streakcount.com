@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Bonnes pratiques de développement StreakCount
+
+## Langue
+Répond toujours en Français
+
+## Utilisation des outils
+
+### Serveur MCP filesystem
+- N'utiliser le serveur MCP filesystem pour la création de fichier, que si Cursor ne le permet pas
+
+### Documentation externe
+- Récupère toujours la documentation la plus récente de Context7 via le MCP
