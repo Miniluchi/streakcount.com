@@ -29,8 +29,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install deps
-        run: npm ci
+      - name: Install deps with legacy peer resolution
+        run: npm ci --legacy-peer-deps
 
       - name: Build frontend
         run: npm run build
