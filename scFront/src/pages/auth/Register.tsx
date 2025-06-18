@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -8,9 +8,47 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/hooks/useAuth";
+import { usePageTitle } from "@/hooks/usePageTitle";
+import { useState } from "react";
 
 export function Register() {
+  usePageTitle("Inscription");
+  const navigate = useNavigate();
+  const { register, isLoading, error, clearError } = useAuth();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Effacer les messages d'erreur quand l'utilisateur tape
+    if (error) clearError();
+    if (successMessage) setSuccessMessage("");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await register(formData);
+
+    if (response.success) {
+      setSuccessMessage(response.message);
+      // Rediriger vers la page de connexion après une inscription réussie
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    }
+  };
+
   return (
     <div className="w-full flex justify-center items-center py-12">
       <Card className="w-full max-w-md mx-auto">
@@ -23,12 +61,33 @@ export function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          {successMessage && (
+            <Alert variant="success" className="mb-4">
+              <AlertDescription>{successMessage}</AlertDescription>
+            </Alert>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">
                 Nom
               </label>
-              <Input id="name" type="text" placeholder="Votre nom" required />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Votre nom"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                disabled={isLoading}
+              />
             </div>
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium">
@@ -36,9 +95,13 @@ export function Register() {
               </label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="exemple@email.com"
+                value={formData.email}
+                onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
@@ -47,22 +110,18 @@ export function Register() {
               </label>
               <Input
                 id="password"
+                name="password"
                 type="password"
                 placeholder="••••••••"
+                value={formData.password}
+                onChange={handleInputChange}
                 required
+                disabled={isLoading}
               />
             </div>
-            <div className="pt-2 flex items-center space-x-2">
-              <Checkbox id="newsletter" />
-              <label
-                htmlFor="newsletter"
-                className="text-sm font-medium leading-none"
-              >
-                Je souhaite recevoir la newsletter
-              </label>
-            </div>
-            <Button type="submit" className="w-full">
-              S'inscrire
+
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Inscription en cours..." : "S'inscrire"}
             </Button>
           </form>
 
