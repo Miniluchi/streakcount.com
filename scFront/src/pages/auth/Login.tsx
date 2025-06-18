@@ -1,16 +1,32 @@
 // src/pages/auth/Login.tsx
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/authService";
+
+
 
 const Login = () => {
+  
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [, setError] = useState("");
   const [remember, setRemember] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici tu appelleras ton service d'auth
-    console.log({ email, password, remember });
+    setError('');
+
+    const res = await authService.login({ email, password });
+
+    if (res.success && res.token && res.user) {
+      authService.saveAuthData(res.token, res.user);
+      navigate("/dashboard", { state: { user: res.user } }); // 🔄 on passe le user à la page dashboard
+    } else {
+      setError(res.message);
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-700">

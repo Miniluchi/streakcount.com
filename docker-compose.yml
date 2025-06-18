@@ -1,4 +1,21 @@
 services:
+  scback:
+    build:
+      context: ./scBack
+      dockerfile: Dockerfile
+    container_name: strikcountcom
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./scBack:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mysql://user:password@mysql:3306/streakcount
+    depends_on:
+      - mysql
+
+
   scfront:
     build:
       context: ./scFront

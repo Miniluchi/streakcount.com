@@ -1,8 +1,22 @@
 // src/pages/dashboard/Dashboard.tsx
 import { Eye, Users, UserPlus, Bookmark } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 
 const Dashboard = () => {
   // Remplace ces valeurs par les vraies données plus tard
+  const location = useLocation();
+  const user = location.state?.user;
+  const [showWelcome, setShowWelcome] = useState(true);
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowWelcome(false);
+  }, 3000); // disparait après 3 secondes
+  return () => clearTimeout(timer);
+}, []);
+
   const stats = [
     {
       icon: <Eye size={20} />,
@@ -31,7 +45,15 @@ const Dashboard = () => {
   ];
 
   return (
+    <div className="relative">
+    {showWelcome && user && (
+      <div className="absolute top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded shadow">
+        👋 Bienvenue {user.email} !
+      </div>
+    )}
+    
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
       {stats.map((stat, index) => (
         <div
           key={index}
@@ -46,6 +68,7 @@ const Dashboard = () => {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 };
