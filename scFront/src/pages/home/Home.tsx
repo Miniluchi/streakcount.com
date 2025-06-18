@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export function Home() {
+  usePageTitle("Accueil");
   return (
     <div className="w-full py-12">
       <div className="max-w-4xl mx-auto px-4 space-y-12">

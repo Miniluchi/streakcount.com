@@ -42,10 +42,33 @@ services:
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_extensions:/opt/sonarqube/extensions
     restart: unless-stopped
+    
+  mysql:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${PROJECT_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
 
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 4444:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mysql
 
 volumes:
   jenkins_home:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
+  mysql_data:
