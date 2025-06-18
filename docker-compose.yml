@@ -13,21 +13,6 @@ services:
       - NODE_ENV=${NODE_ENV}
     command: npm run dev -- --host 0.0.0.0
 
-  jenkins:
-    build:
-      context: .
-      dockerfile: jenkins.dockerfile
-    container_name: scJenkins
-    depends_on:
-      - sonarqube
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-
   sonarqube:
     image: sonarqube:community
     container_name: sonarqube
@@ -65,7 +50,6 @@ services:
       - mysql
 
 volumes:
-  jenkins_home:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
