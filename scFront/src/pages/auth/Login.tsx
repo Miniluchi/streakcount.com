@@ -1,130 +1,72 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useAuth } from "@/hooks/useAuth";
-import { usePageTitle } from "@/hooks/usePageTitle";
+// src/pages/auth/Login.tsx
+import { useState } from 'react';
 
-export function Login() {
-  usePageTitle("Connexion");
-  const navigate = useNavigate();
-  const { login, isLoading, error, clearError } = useAuth();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [successMessage, setSuccessMessage] = useState("");
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Effacer les messages d'erreur quand l'utilisateur tape
-    if (error) clearError();
-    if (successMessage) setSuccessMessage("");
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const response = await login(formData);
-
-    if (response.success) {
-      setSuccessMessage(response.message);
-      // Rediriger vers la page d'accueil après une connexion réussie
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    }
+    // Ici tu appelleras ton service d'auth
+    console.log({ email, password, remember });
   };
 
   return (
-    <div className="w-full flex justify-center items-center py-12">
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-2xl font-bold text-center mb-2">
-            Connexion
-          </CardTitle>
-          <CardDescription className="text-center">
-            Connectez-vous pour accéder à votre compte
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {error && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          {successMessage && (
-            <Alert variant="success" className="mb-4">
-              <AlertDescription>{successMessage}</AlertDescription>
-            </Alert>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="exemple@email.com"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium">
-                  Mot de passe
-                </label>
-                <Button variant="link" className="text-xs p-0 h-auto">
-                  Mot de passe oublié ?
-                </Button>
-              </div>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Connexion en cours..." : "Se connecter"}
-            </Button>
-          </form>
-
-          <div className="text-center mt-6">
-            <span className="text-sm text-muted-foreground">
-              Vous n'avez pas de compte ?{" "}
-            </span>
-            <Link to="/register">
-              <Button variant="link" className="text-sm p-0">
-                Inscrivez-vous
-              </Button>
-            </Link>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-700">
+      <div className="bg-white p-10 rounded-2xl shadow-md w-full max-w-md">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+              required
+            />
           </div>
-        </CardContent>
-      </Card>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <div className="flex justify-between items-center">
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+                required
+              />
+              <a href="#" className="ml-2 text-sm text-blue-600 hover:underline">forgot password</a>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={e => setRemember(e.target.checked)}
+              className="mr-2"
+            />
+            <label className="text-sm text-gray-600">Remember for 30 days</label>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-indigo-900 text-white py-2 px-4 rounded-md hover:bg-indigo-800 transition"
+          >
+            Login
+          </button>
+          <p className="text-sm text-center mt-4 text-gray-600">
+  Don’t have an account?{" "}
+  <a href="/register" className="text-purple-700 font-medium underline hover:text-purple-900">
+    Create one
+  </a>
+</p>
+
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default Login;
