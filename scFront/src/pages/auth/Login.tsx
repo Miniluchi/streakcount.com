@@ -1,18 +1,34 @@
 // src/pages/auth/Login.tsx
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 
 
 const Login = () => {
   
   const navigate = useNavigate();
+const location = useLocation();
+const [logoutMessage, setLogoutMessage] = useState(location.state?.logout ? "Déconnexion réussie." : null);
+
+// Supprimer le message après 5 secondes
+useEffect(() => {
+  if (logoutMessage) {
+    const timer = setTimeout(() => {
+      setLogoutMessage(null);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }
+}, [logoutMessage]);
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [, setError] = useState("");
   const [remember, setRemember] = useState(false);
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -28,9 +44,16 @@ const Login = () => {
   };
 
 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-700">
       <div className="bg-white p-10 rounded-2xl shadow-md w-full max-w-md">
+{logoutMessage && (
+  <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded mb-4 text-center">
+    {logoutMessage}
+  </div>
+)}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700">Email address</label>
